@@ -5,11 +5,10 @@ import { useCookies } from "react-cookie";
 import type { VideoContract } from "../contracts/video-contract";
 import {  useDispatch } from "react-redux";
 import { addToSaveList } from "../slicers/video-slicer";
-import store from "../store/store";
 
 export function UserDashBoard(){
 
-const[cookies,setCookie,removecookie]=useCookies(['userid']);
+const[cookies,,removecookie]=useCookies(['userid']);
 const[videos,setVideos]=useState<VideoContract[]>();
 let navigate=useNavigate();
 let dispatch=useDispatch();

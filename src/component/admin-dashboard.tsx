@@ -5,7 +5,7 @@ import {Link,useNavigate} from "react-router-dom";
 import type { VideoContract } from "../contracts/video-contract";
  
 export function AdminDashboard(){
-    const[cookies,setCookies,removecookie]=useCookies(['admin_id']);
+    const[, ,removecookie]=useCookies(['admin_id']);
 
     const[videos,setVideos]=useState<VideoContract[]>();
 

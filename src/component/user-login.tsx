@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import {Link,useNavigate} from "react-router-dom";
 
 export function UserLogin(){
-  const[cookies, setCookies,removecookie] = useCookies(['userid']);
+  const[, setCookies] = useCookies(['userid']);
 
     let navigate=useNavigate();
     const formik=useFormik({
