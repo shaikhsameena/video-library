@@ -147,6 +147,8 @@ app.delete("/delete-video/:id", (req, res) => {
 });
 
 // ✅ Start Server
-app.listen(5080, () => {
-  console.log(`API Started on port 5080`);
+
+const PORT = process.env.PORT || 5080;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
