@@ -20,7 +20,7 @@ export function AddVideo(){
             category_id:0
         },
         onSubmit:(video)=>{
-          axios.post(`http://127.0.0.1:5079/add-video`,video)
+          axios.post(`http://127.0.0.1:5080/add-video`,video)
           .then(()=>{
             console.log('video added');
           })
@@ -29,7 +29,7 @@ export function AddVideo(){
         }
     })
     useEffect(()=>{
-        axios.get(`http://127.0.0.1:5079/get-categories`)
+        axios.get(`http://127.0.0.1:5080/get-categories`)
         .then(response=>{
             response.data.unshift({category_id:1,category_name:'select category'});
             setCategories(response.data);

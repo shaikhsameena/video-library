@@ -23,7 +23,7 @@ const Formik=useFormik({
        category_id:videos[0].category_id
     },
     onSubmit:(video)=>{
-        axios.put(`http://127.0.0.1:5079/edit-video/${params.id}`,video)
+        axios.put(`http://127.0.0.1:5080/edit-video/${params.id}`,video)
         .then(()=>{
           console.log('modified');  
         })
@@ -34,14 +34,14 @@ const Formik=useFormik({
 
 })
 function Loadcategories(){
-    axios.get(`http://127.0.0.1:5079/get-categories`)
+    axios.get(`http://127.0.0.1:5080/get-categories`)
     .then(response=>{
         response.data.unshift({category_id:-1,category_name:'select category'});
         setCategories(response.data);
     })
 }
 function LoadVideos(){
-    axios.get(`http://127.0.0.1:5079/get-video/${params.id}`)
+    axios.get(`http://127.0.0.1:5080/get-video/${params.id}`)
     .then(response=>{
         setVideos(response.data);
     })

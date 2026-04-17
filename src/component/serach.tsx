@@ -92,7 +92,7 @@ export function MainComponent({ search }: { search: string }) {
 
     useEffect(() => {
         if (search) {
-            axios.get(`http://127.0.0.1:5079/get-video/${search}`)
+            axios.get(`http://127.0.0.1:5080/get-video/${search}`)
                 .then(response => {
                     setVideos(response.data);
                     console.log(response.data)

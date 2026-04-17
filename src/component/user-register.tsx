@@ -26,7 +26,7 @@ const formik=useFormik({
  
     
     onSubmit:(user)=>{
-        axios.post(`http://127.0.0.1:5079/register-user`,user)
+        axios.post(`http://127.0.0.1:5080/register-user`,user)
         .then(()=>{
            console.log(`Registered`); 
         })
@@ -37,7 +37,7 @@ const formik=useFormik({
 
 })
   function VerifyUser(e:any){
-    axios.get(`http://127.0.0.1:5079/get-users`)
+    axios.get(`http://127.0.0.1:5080/get-users`)
     .then(response=>{
         for(var user of response.data){
             if(user.user_id===e.target.value){

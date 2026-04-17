@@ -1,168 +1,152 @@
-const express=require("express");
-const cors=require("cors");
-const mongoClient=require("mongodb").MongoClient;
+const express = require("express");
+const cors = require("cors");
+const mongoClient = require("mongodb").MongoClient;
 
 const app = express();
 
+// ✅ MongoDB Atlas URL (replace password if needed)
+const url = "mongodb+srv://sameena:Sameena123@cluster0.kl0nzxi.mongodb.net/video-project";
+
 app.use(cors());
-
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.get("/get-categories",(req,res)=>{
-mongoClient.connect("mongodb://127.0.0.1:27017")
-.then(clientObj=>{
-   var database = clientObj.db("video-project");
-   database.collection("tblcategories").find({}).toArray().then(documents=>{
-    res.send(documents);
-    res.end();
-   });
 
-});
-
-});
-app.get("/get-admin",(req,res)=>{
-mongoClient.connect("mongodb://127.0.0.1:27017")
-.then(clientObj=>{
-   var database = clientObj.db("video-project");
-   database.collection("tbladmin").find({}).toArray().then(documents=>{
-    res.send(documents);
-    res.end();
-   });
-
-});
-
-});
-
-app.get("/get-users",(req,res)=>{
-mongoClient.connect("mongodb://127.0.0.1:27017")
-.then(clientObj=>{
-   var database = clientObj.db("video-project");
-   database.collection("tblusers").find({}).toArray().then(documents=>{
-    res.send(documents);
-    res.end();
-   });
-
-});
-
-});
-app.get("/get-video",(req,res)=>{
-mongoClient.connect("mongodb://127.0.0.1:27017")
-.then(clientObj=>{
-   var database = clientObj.db("video-project");
-   database.collection("tblvideos").find({}).toArray().then(documents=>{
-    res.send(documents);
-    res.end();
-   });
-
-});
-
-});
-app.get("/get-video/:id",(req,res)=>{
-   var id = parseInt(req.params.id);
-
-mongoClient.connect("mongodb://127.0.0.1:27017")
-.then(clientObj=>{
-   var database = clientObj.db("video-project");
-   database.collection("tblvideos").find({video_id:id}).toArray().then(documents=>{
-    res.send(documents);
-    res.end();
-   });
-
-});
-
-});
- app.post("/register-user",(req,res)=>{
-var user ={
-   user_id:req.body.user_id,
-   user_name: req.body.user_name,
-   password:req.body.password,
-   mobile:req.body.mobile,
-   email:req.body.email
-
-};
-mongoClient.connect("mongodb://127.0.0.1:27017")
-.then(clientObj=>{
-   var database = clientObj.db("video-project");
-   database.collection("tblusers").insertOne(user).then(()=>{
-      console.log('user Registered');
+// ✅ Get Categories
+app.get("/get-categories", (req, res) => {
+  mongoClient.connect(url).then(clientObj => {
+    var database = clientObj.db("video-project");
+    database.collection("tblcategories").find({}).toArray().then(documents => {
+      res.send(documents);
       res.end();
-   })
+    });
+  });
+});
 
-})
+// ✅ Get Admin
+app.get("/get-admin", (req, res) => {
+  mongoClient.connect(url).then(clientObj => {
+    var database = clientObj.db("video-project");
+    database.collection("tbladmin").find({}).toArray().then(documents => {
+      res.send(documents);
+      res.end();
+    });
+  });
+});
 
- })
- app.post("/add-video", (req, res)=>{
+// ✅ Get Users
+app.get("/get-users", (req, res) => {
+  mongoClient.connect(url).then(clientObj => {
+    var database = clientObj.db("video-project");
+    database.collection("tblusers").find({}).toArray().then(documents => {
+      res.send(documents);
+      res.end();
+    });
+  });
+});
 
-     var video = {
-        video_id : parseInt(req.body.video_id),
-        title: req.body.title,
-        description:req.body.description,
-        comments: req.body.comments,
-        likes : parseInt(req.body.likes),
-        views : parseInt(req.body.views),
-        url: req.body.url,
-        category_id: parseInt(req.body.category_id)
-     }
+// ✅ Get All Videos
+app.get("/get-video", (req, res) => {
+  mongoClient.connect(url).then(clientObj => {
+    var database = clientObj.db("video-project");
+    database.collection("tblvideos").find({}).toArray().then(documents => {
+      res.send(documents);
+      res.end();
+    });
+  });
+});
 
-      mongoClient.connect("mongodb://127.0.0.1:27017").then(clientObj=>{
+// ✅ Get Video by ID
+app.get("/get-video/:id", (req, res) => {
+  var id = parseInt(req.params.id);
 
-            var database = clientObj.db("video-project");
+  mongoClient.connect(url).then(clientObj => {
+    var database = clientObj.db("video-project");
+    database.collection("tblvideos").find({ video_id: id }).toArray().then(documents => {
+      res.send(documents);
+      res.end();
+    });
+  });
+});
 
-            database.collection("tblvideos").insertOne(video).then(()=>{
-                   console.log('Video Added..');
-                   res.end();
-            })
+// ✅ Register User
+app.post("/register-user", (req, res) => {
+  var user = {
+    user_id: req.body.user_id,
+    user_name: req.body.user_name,
+    password: req.body.password,
+    mobile: req.body.mobile,
+    email: req.body.email
+  };
 
-      })
+  mongoClient.connect(url).then(clientObj => {
+    var database = clientObj.db("video-project");
+    database.collection("tblusers").insertOne(user).then(() => {
+      console.log("User Registered");
+      res.end();
+    });
+  });
+});
 
-})
+// ✅ Add Video
+app.post("/add-video", (req, res) => {
+  var video = {
+    video_id: parseInt(req.body.video_id),
+    title: req.body.title,
+    description: req.body.description,
+    comments: req.body.comments,
+    likes: parseInt(req.body.likes),
+    views: parseInt(req.body.views),
+    url: req.body.url,
+    category_id: parseInt(req.body.category_id)
+  };
 
-app.put("/edit-video/:id", (req, res)=>{
+  mongoClient.connect(url).then(clientObj => {
+    var database = clientObj.db("video-project");
+    database.collection("tblvideos").insertOne(video).then(() => {
+      console.log("Video Added");
+      res.end();
+    });
+  });
+});
 
-     var id  = parseInt(req.params.id);
+// ✅ Edit Video
+app.put("/edit-video/:id", (req, res) => {
+  var id = parseInt(req.params.id);
 
-     var video = {
-        video_id : parseInt(req.body.video_id),
-        title: req.body.title,
-        description:req.body.description,
-        comments: req.body.comments,
-        likes : parseInt(req.body.likes),
-        views : parseInt(req.body.views),
-        url: req.body.url,
-        category_id: parseInt(req.body.category_id)
-     }
+  var video = {
+    video_id: parseInt(req.body.video_id),
+    title: req.body.title,
+    description: req.body.description,
+    comments: req.body.comments,
+    likes: parseInt(req.body.likes),
+    views: parseInt(req.body.views),
+    url: req.body.url,
+    category_id: parseInt(req.body.category_id)
+  };
 
-      mongoClient.connect("mongodb://127.0.0.1:27017").then(clientObj=>{
+  mongoClient.connect(url).then(clientObj => {
+    var database = clientObj.db("video-project");
+    database.collection("tblvideos").updateOne({ video_id: id }, { $set: video }).then(() => {
+      console.log("Video Updated");
+      res.end();
+    });
+  });
+});
 
-            var database = clientObj.db("video-project");
+// ✅ Delete Video
+app.delete("/delete-video/:id", (req, res) => {
+  var id = parseInt(req.params.id);
 
-            database.collection("tblvideos").updateOne({video_id:id},{$set:video}).then(()=>{
-                   console.log('Video Updated..');
-                   res.end();
-            })
+  mongoClient.connect(url).then(clientObj => {
+    var database = clientObj.db("video-project");
+    database.collection("tblvideos").deleteOne({ video_id: id }).then(() => {
+      console.log("Video Deleted");
+      res.end();
+    });
+  });
+});
 
-      })
-})
-
-
-app.delete("/delete-video/:id", (req, res)=>{
-
-     var id  = parseInt(req.params.id);
-
-   
-      mongoClient.connect("mongodb://127.0.0.1:27017").then(clientObj=>{
-
-            var database = clientObj.db("video-project");
-
-            database.collection("tblvideos").deleteOne({video_id:id}).then(()=>{
-                   console.log('Video Deleted..');
-                   res.end();
-            })
-
-      })
-})
-
-
-
-app.listen(5079);
-console.log(`API Started http://127.0.0.1:5079`);
+// ✅ Start Server
+app.listen(5080, () => {
+  console.log(`API Started on port 5080`);
+});
