@@ -5,7 +5,7 @@ const { MongoClient } = require("mongodb");
 const app = express();
 
 // ✅ MongoDB Atlas URL
-const url = "mongodb+srv://sameena:Sameena123@cluster0.kl0nzxi.mongodb.net/video-project";
+const url = "mongodb+srv://sameena:sameena123@cluster0.kl0nzxi.mongodb.net/video-project";
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
