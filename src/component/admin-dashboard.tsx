@@ -12,7 +12,7 @@ export function AdminDashboard(){
     let navigate= useNavigate();
 
     function LoadVideos(){
-        axios.get(`http://127.0.0.1:5080/get-video`)
+        axios.get(`https://video-library-cxf0.onrender.com/get-video`)
         .then(response=>{
            setVideos(response.data); 
         })

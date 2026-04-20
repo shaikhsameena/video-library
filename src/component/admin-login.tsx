@@ -10,7 +10,7 @@ export function AdminLogin(){
             password:''
         },
         onSubmit:(admin:any)=>{
-            axios.get(`http://127.0.0.1:5080/get-admin`)
+            axios.get(`https://video-library-cxf0.onrender.com/get-admin`)
             .then(response=>{
                 let result=response.data.find((item:any)=>item.admin_id===admin.admin_id);
                 if(result){

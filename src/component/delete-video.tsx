@@ -10,7 +10,7 @@ let navigate=useNavigate();
 let params=useParams();
 
 function LoadVideos(){
-    axios.get(`http://127.0.0.1:5080/get-video/${params.id}`)
+    axios.get(`https://video-library-cxf0.onrender.com/get-video/${params.id}`)
     .then(response=>{
         setVideos(response.data);
     })
@@ -19,7 +19,7 @@ useEffect(()=>{
     LoadVideos();
 },[])
 function handleDeleteClick(){
-    axios.delete(`http://127.0.0.1:5080/delete-video/${params.id}`)
+    axios.delete(`https://video-library-cxf0.onrender.com/delete-video/${params.id}`)
     .then(()=>{
         console.log('Delete');
     })
