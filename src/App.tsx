@@ -36,6 +36,7 @@ export function App(){
           <Route path='edit-video/:id'element={<EditVideo/>}/>
           <Route path='delete-video/:id' element={<DeleteVideo/>}/>
           <Route path='user-dashboard' element={<UserDashBoard/>}/>
+          <Route path="/user-login-error" element={<h2>Invalid User Id or Password</h2>} />
           <Route path='serach' element={<MainComponent search={''}/>}/>
         </Routes>
       </section>
