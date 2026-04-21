@@ -140,26 +140,27 @@ app.delete("/delete-video/:id", async (req, res) => {
     res.status(500).send(err);
   }
 });
-app.post("/user-login", (req, res) => {
-  const { user_id, password } = req.body;
+app.post("/user-login", async (req, res) => {
+  try {
+    const { user_id, password } = req.body;
 
-  mongoClient.connect(url).then(clientObj => {
-    const database = clientObj.db("video-project");
+    console.log("Login Data:", user_id, password); // debug
 
-    database.collection("tblusers")
-      .findOne({ user_id: user_id, password: password })
-      .then(user => {
-        if (user) {
-          res.send({ success: true, user });
-        } else {
-          res.send({ success: false });
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).send("Server error");
-      });
-  });
+    const user = await db.collection("tblusers").findOne({
+      user_id: user_id,
+      password: password
+    });
+
+    if (user) {
+      res.send({ success: true, user });
+    } else {
+      res.send({ success: false });
+    }
+
+  } catch (err) {
+    console.log("Login Error:", err);
+    res.status(500).send("Server Error");
+  }
 });
 
 // ✅ Start Server
